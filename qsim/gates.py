@@ -139,3 +139,20 @@ def get_ccnot(target: int, c1: int, c2: int, n_bits: int) -> np.ndarray:
     }, n_bits)
 
     return result
+
+
+def get_oracle_gate(
+    n_bits: int,
+    key: int | None = None,
+    state: np.ndarray | None = None,
+) -> np.ndarray:
+    if (key is None) == (state is None):
+        raise ValueError('Please assign only one of key or state')
+    
+    gate = np.eye(2**n_bits, dtype=complex)
+    if key is not None:
+        gate[key, key] = -1
+    else:
+        gate -= 2 * np.outer(state, state)
+
+    return gate
