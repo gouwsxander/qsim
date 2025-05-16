@@ -20,9 +20,11 @@ system.apply_gate(hadamard_all)
 
 diffusion = -qsim.gates.get_oracle_gate(N_BITS, state=system.state)
 
-# Apply operations
+# Apply the oracle and diffusion operations
 for i in range(int(np.pi / 4 * np.sqrt(2**N_BITS))):
     system.apply_gate(oracle)
     system.apply_gate(diffusion)
+
+    # Investigate how system state changes with each step.
     print(system._get_probabilities())
 
