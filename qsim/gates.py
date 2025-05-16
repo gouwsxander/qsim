@@ -29,7 +29,16 @@ def make_gate(gates: dict[int, np.ndarray], n_bits: int) -> np.ndarray:
     """
     operators = (gates[i] if i in gates else np.eye(2) for i in range(n_bits))
     return tensor_product(operators)
-    
+
+
+def is_unitary(gate: np.ndarray) -> bool:
+    m_dim, n_dim = gate.shape
+
+    if m_dim != n_dim:
+        return False
+
+    return bool(np.all(np.isclose(gate.conj().T @ gate, np.eye(n_dim))))
+
 
 def get_x(target: int, n_bits: int) -> np.ndarray:
     """Get Pauli X gate."""
@@ -153,6 +162,6 @@ def get_oracle_gate(
     if key is not None:
         gate[key, key] = -1
     else:
-        gate -= 2 * np.outer(state, state)
+        gate -= 2 * np.outer(state, state) # type: ignore
 
     return gate
