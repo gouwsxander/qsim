@@ -13,7 +13,7 @@ system = qsim.system.System(N_BITS)
 
 # Apply the Hadamard gate to all gates
 hadamard_all = qsim.gates.make_gate(
-    {i: qsim.gates.H_1 for i in range(2**N_BITS)},
+    {i: qsim.gates.H_1 for i in range(N_BITS)},
     N_BITS
 )
 system.apply_gate(hadamard_all)
